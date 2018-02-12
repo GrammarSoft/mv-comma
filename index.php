@@ -42,7 +42,7 @@ function file2attr($f) {
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 	<link rel="stylesheet" href="static/komma.css?v=1698ba24">
-	<script src="static/komma.js?v=158348af"></script>
+	<script src="static/komma.js?v=dc5cd581"></script>
 
 <script>
 var sid = '<?=$mv_session_id;?>';

@@ -2,7 +2,7 @@
 
 header('Content-Type: text/plain; charset=UTF-8');
 
-echo "Kommaforslag at commit cb5d2613c6767532658a4e5fbcb5e29d5ee06d70 (r163) deployed on 2018-02-09 13:51:07\n\n";
+echo "Kommaforslag at commit 605f6bd961ae7e98964df23f722d66cfe5f7fb70 (r165) deployed on 2018-02-12 15:23:59\n\n";
 
 echo "uptime:\n", shell_exec('uptime'), "\n";
 echo "free -h:\n", shell_exec('free -h'), "\n";
