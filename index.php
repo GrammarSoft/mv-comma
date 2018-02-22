@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__.'/mvid_ai.php';
-$mv_has_comma = comma_check_access($mv_session_id, $mvid_shared_key);
-if (!$mv_has_comma) {
+$mv_has_access = mvid_check_access($GLOBALS['mv-session-id']);
+if (!$mv_has_access) {
 	header('Location: ./login.php');
 	die();
 }
@@ -42,10 +42,10 @@ function file2attr($f) {
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 	<link rel="stylesheet" href="static/komma.css?v=1698ba24">
-	<script src="static/komma.js?v=dc5cd581"></script>
+	<script src="static/komma.js?v=b3b9a45a"></script>
 
 <script>
-var sid = '<?=$mv_session_id;?>';
+var sid = <?=json_encode_num($GLOBALS['mv-session-id']);?>;
 var mvid_to = null;
 var mvid_errs = 0;
 var mvid_first = true;
@@ -73,18 +73,19 @@ function mvid_error() {
 }
 
 function mvid_keepalive() {
-	session_alive = false;
 	if (mvid_to) {
 		clearTimeout(mvid_to);
 	}
 	mvid_to = setTimeout(mvid_error, mvid_first ? 2500 : 5000);
 
-	$.getScript('https://signon.mv-nordic.com/sp-tools/keep_alive?mimetype=js&mv_session_id='+sid, function() {
-		console.log(session_alive);
-		if (!session_alive) {
+	$.post('./callback.php', {a: 'keepalive', SessionID: sid}).done(function(rv) {
+		console.log(rv);
+		if (!rv.hmac) {
 			document.location = './login.php';
 			return;
 		}
+		g_access = rv;
+		sid = rv.sessionid;
 		clearTimeout(mvid_to);
 		mvid_to = null;
 		mvid_errs = 0;
