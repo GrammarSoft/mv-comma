@@ -8,6 +8,7 @@ if (!empty($_SERVER['HTTP_ORIGIN'])) {
 	$origin = trim($_SERVER['HTTP_ORIGIN']);
 }
 header('Access-Control-Allow-Origin: '.$origin);
+header('Access-Control-Allow-Credentials: true');
 
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 	header('HTTP/1.1 200 Options');
